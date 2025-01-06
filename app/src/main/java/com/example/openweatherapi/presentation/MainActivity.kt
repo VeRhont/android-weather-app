@@ -1,4 +1,4 @@
-package com.example.openweatherapi
+package com.example.openweatherapi.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -7,13 +7,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.core.os.BuildCompat
-import com.example.openweatherapi.ui.theme.OpenWeatherAPITheme
+import com.example.openweatherapi.presentation.main_screen.components.CurrentWeatherScreen
+import com.example.openweatherapi.presentation.theme.OpenWeatherAPITheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,28 +20,11 @@ class MainActivity : ComponentActivity() {
         setContent {
             OpenWeatherAPITheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
+                    CurrentWeatherScreen(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    OpenWeatherAPITheme {
-        Greeting("Android")
     }
 }
