@@ -8,8 +8,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
-import com.example.openweatherapi.presentation.main_screen.components.CurrentWeatherScreen
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.openweatherapi.presentation.current_weather.components.CurrentWeatherScreen
 import com.example.openweatherapi.presentation.theme.OpenWeatherAPITheme
+import com.example.openweatherapi.presentation.weather_forecast.components.WeatherForecastScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,9 +24,34 @@ class MainActivity : ComponentActivity() {
         setContent {
             OpenWeatherAPITheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    CurrentWeatherScreen(
-                        modifier = Modifier.padding(innerPadding)
-                    )
+//                    CurrentWeatherScreen(
+//                        modifier = Modifier.padding(innerPadding)
+//                    )
+//                    WeatherForecastScreen(
+//                        modifier = Modifier.padding(innerPadding)
+//                    )
+
+                    val navController = rememberNavController()
+                    NavHost(
+                        navController = navController,
+                        startDestination = Screen.CurrentWeatherScreen.route
+                    ) {
+                        composable (
+                            route = Screen.CurrentWeatherScreen.route
+                        ) {
+                            CurrentWeatherScreen(
+                                navController = navController,
+                                modifier = Modifier.padding(innerPadding)
+                            )
+                        }
+                        composable (
+                            route = Screen.WeatherForecastScreen.route
+                        ) {
+                            WeatherForecastScreen(
+                                modifier = Modifier.padding(innerPadding)
+                            )
+                        }
+                    }
                 }
             }
         }

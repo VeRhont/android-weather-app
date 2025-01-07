@@ -1,4 +1,4 @@
-package com.example.openweatherapi.presentation.main_screen
+package com.example.openweatherapi.presentation.current_weather
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.openweatherapi.BuildConfig
 import com.example.openweatherapi.common.Resource
 import com.example.openweatherapi.domain.use_case.get_current_weather.GetCurrentWeatherUseCase
-import com.example.openweatherapi.domain.use_case.get_weather_forecast.GetWeatherForecastUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -18,7 +17,6 @@ import javax.inject.Inject
 @HiltViewModel
 class CurrentWeatherViewModel @Inject constructor(
     private val getCurrentWeatherUseCase: GetCurrentWeatherUseCase,
-    savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
     private val _state = mutableStateOf(CurrentWeatherState())

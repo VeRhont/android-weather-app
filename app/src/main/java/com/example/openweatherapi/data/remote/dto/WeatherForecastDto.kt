@@ -4,7 +4,7 @@ import com.example.openweatherapi.domain.model.WeatherForecast
 
 
 data class WeatherForecastDto(
-    val cod: Int,
+    val cod: String,
     val message: Int,
     val cnt: Int,
     val list: ArrayList<ListItem> = arrayListOf(),
@@ -15,6 +15,5 @@ data class WeatherForecastDto(
 fun WeatherForecastDto.toWeatherForecast(): WeatherForecast {
     return WeatherForecast(
         list = list,
-        city = city
     )
 }

@@ -1,6 +1,5 @@
-package com.example.openweatherapi.presentation.main_screen.components
+package com.example.openweatherapi.presentation.current_weather.components
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -8,7 +7,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -22,11 +20,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.BottomCenter
 import androidx.compose.ui.Alignment.Companion.Center
-import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.Blue
 import androidx.compose.ui.graphics.Color.Companion.Cyan
 import androidx.compose.ui.graphics.Color.Companion.Green
@@ -39,14 +34,14 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
-import com.example.openweatherapi.presentation.main_screen.CurrentWeatherViewModel
-import com.example.openweatherapi.presentation.theme.OpenWeatherAPITheme
+import com.example.openweatherapi.presentation.Screen
+import com.example.openweatherapi.presentation.current_weather.CurrentWeatherViewModel
 import java.util.Locale
 
 
 @Composable
 fun CurrentWeatherScreen(
-//    navController: NavController,
+    navController: NavController,
     modifier: Modifier = Modifier,
     viewModel: CurrentWeatherViewModel = hiltViewModel(),
 ) {
@@ -208,7 +203,9 @@ fun CurrentWeatherScreen(
                             .background(Blue),
                         contentAlignment = Center
                     ) {
-                        Button(onClick = {}) {
+                        Button(onClick = {
+                            navController.navigate(Screen.WeatherForecastScreen.route)
+                        }) {
                             Text(
                                 text = "Forecast for 5 days",
                                 style = MaterialTheme.typography.bodyLarge

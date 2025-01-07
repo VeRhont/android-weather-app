@@ -1,4 +1,4 @@
-package com.example.openweatherapi.presentation.main_screen
+package com.example.openweatherapi.presentation.current_weather
 
 import com.example.openweatherapi.domain.model.CurrentWeather
 
