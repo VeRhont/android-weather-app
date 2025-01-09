@@ -1,5 +1,7 @@
 package com.example.openweatherapi.presentation.current_weather.components
 
+import android.util.Log
+import android.view.KeyEvent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -13,11 +15,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
@@ -27,14 +32,18 @@ import androidx.compose.ui.graphics.Color.Companion.Cyan
 import androidx.compose.ui.graphics.Color.Companion.Green
 import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.graphics.Color.Companion.Yellow
+import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
+import com.example.openweatherapi.common.round
 import com.example.openweatherapi.presentation.Screen
+import com.example.openweatherapi.presentation.ScreenB
 import com.example.openweatherapi.presentation.current_weather.CurrentWeatherViewModel
 import java.util.Locale
 
@@ -53,14 +62,14 @@ fun CurrentWeatherScreen(
             .background(Yellow)
     ) {
 
-        state.currentWeather?.let {
+        state.currentWeather?.let { state ->
 
-            val temperature = it.main.temp
-            val feelsLike = it.main.feelsLike
-            val weather = it.weather[0].main
-            val wind = it.wind.speed
-            val humidity = it.main.humidity
-            val pressure = it.main.pressure
+            val temperature = state.main.temp.round(1)
+            val feelsLike = state.main.feelsLike.round(1)
+            val weather = state.weather[0].main
+            val wind = state.wind.speed
+            val humidity = state.main.humidity
+            val pressure = state.main.pressure
 
             LazyColumn(
                 modifier = modifier
@@ -69,8 +78,24 @@ fun CurrentWeatherScreen(
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
                 item {
+                    TextField(
+                        value = viewModel.cityState.value,
+                        onValueChange = {
+                            viewModel.updateCity(it)
+                        },
+                        singleLine = true,
+                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                        keyboardActions = KeyboardActions(),
+                        modifier = Modifier.onKeyEvent {
+                            if (it.nativeKeyEvent.keyCode == KeyEvent.KEYCODE_ENTER) {
+                                viewModel.getCurrentWeather()
+                                true
+                            }
+                            false
+                        }
+                    )
                     Text(
-                        text = "Moscow",
+                        text = viewModel.cityState.value,
                         style = MaterialTheme.typography.headlineMedium
                     )
                     HorizontalDivider()
@@ -109,7 +134,7 @@ fun CurrentWeatherScreen(
                                 horizontalArrangement = Arrangement.Start
                             ) {
                                 Image(
-                                    painter = rememberAsyncImagePainter("https://openweathermap.org/img/wn/${it.weather[0].icon}@4x.png"),
+                                    painter = rememberAsyncImagePainter("https://openweathermap.org/img/wn/${state.weather[0].icon}@4x.png"),
                                     contentDescription = null,
                                     modifier = Modifier.size(128.dp)
                                 )
@@ -204,7 +229,10 @@ fun CurrentWeatherScreen(
                         contentAlignment = Center
                     ) {
                         Button(onClick = {
-                            navController.navigate(Screen.WeatherForecastScreen.route)
+//                            navController.navigate(Screen.WeatherForecastScreen.route)
+                            navController.navigate(
+                                ScreenB(city = viewModel.cityState.value)
+                            )
                         }) {
                             Text(
                                 text = "Forecast for 5 days",

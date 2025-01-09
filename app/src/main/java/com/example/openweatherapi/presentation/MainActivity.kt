@@ -1,6 +1,7 @@
 package com.example.openweatherapi.presentation
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -11,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.example.openweatherapi.presentation.current_weather.components.CurrentWeatherScreen
 import com.example.openweatherapi.presentation.theme.OpenWeatherAPITheme
 import com.example.openweatherapi.presentation.weather_forecast.components.WeatherForecastScreen
@@ -24,30 +26,25 @@ class MainActivity : ComponentActivity() {
         setContent {
             OpenWeatherAPITheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-//                    CurrentWeatherScreen(
-//                        modifier = Modifier.padding(innerPadding)
-//                    )
-//                    WeatherForecastScreen(
-//                        modifier = Modifier.padding(innerPadding)
-//                    )
 
                     val navController = rememberNavController()
                     NavHost(
                         navController = navController,
-                        startDestination = Screen.CurrentWeatherScreen.route
+//                        startDestination = Screen.CurrentWeatherScreen.route
+                        startDestination = ScreenA
                     ) {
-                        composable (
-                            route = Screen.CurrentWeatherScreen.route
-                        ) {
+
+                        composable<ScreenA> {
                             CurrentWeatherScreen(
                                 navController = navController,
                                 modifier = Modifier.padding(innerPadding)
                             )
                         }
-                        composable (
-                            route = Screen.WeatherForecastScreen.route
-                        ) {
+
+                        composable<ScreenB> {
+                            val city = it.toRoute<ScreenB>().city
                             WeatherForecastScreen(
+                                city = city,
                                 modifier = Modifier.padding(innerPadding)
                             )
                         }
@@ -57,3 +54,20 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
+//                        composable (
+//                            route = Screen.CurrentWeatherScreen.route
+//                        ) {
+//                            CurrentWeatherScreen(
+//                                navController = navController,
+//                                modifier = Modifier.padding(innerPadding)
+//                            )
+//                        }
+
+//                        composable (
+//                            route = Screen.WeatherForecastScreen.route
+//                        ) {
+//                            WeatherForecastScreen(
+//                                modifier = Modifier.padding(innerPadding)
+//                            )
+//                        }

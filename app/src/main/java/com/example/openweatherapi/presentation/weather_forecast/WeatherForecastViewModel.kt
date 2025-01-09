@@ -3,6 +3,7 @@ package com.example.openweatherapi.presentation.weather_forecast
 import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.openweatherapi.BuildConfig
@@ -18,14 +19,21 @@ import javax.inject.Inject
 @HiltViewModel
 class WeatherForecastViewModel @Inject constructor(
     private val getWeatherForecastUseCase: GetWeatherForecastUseCase,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val _state = mutableStateOf(WeatherForecastState())
     val state: State<WeatherForecastState> = _state
 
+
     init {
-        val city = "Moscow"
-        getWeatherForecast(city)
+//        Log.d("CITY", savedStateHandle.get<String>("city") ?: "NULL")
+//        val city = "Moscow"
+//        getWeatherForecast(city)
+
+        savedStateHandle.get<String>("city")?.let { city ->
+            getWeatherForecast(city)
+        }
     }
 
     private fun getWeatherForecast(

@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.Color.Companion.Magenta
 import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
+import com.example.openweatherapi.common.round
 import com.example.openweatherapi.data.remote.dto.ListItem
 import java.util.Locale
 
@@ -57,7 +58,7 @@ fun WeatherForDay(
         ) {
             items(list) { item ->
                 WeatherCard(
-                    temperature = item.main.temp,
+                    temperature = item.main.temp.round(1),
                     weather = item.weather[0].main,
                     icon = item.weather[0].icon,
                     time = item.dtTxt.substring(11, 16)

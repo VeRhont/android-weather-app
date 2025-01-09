@@ -2,7 +2,6 @@ package com.example.openweatherapi.presentation.current_weather
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.openweatherapi.BuildConfig
@@ -19,16 +18,18 @@ class CurrentWeatherViewModel @Inject constructor(
     private val getCurrentWeatherUseCase: GetCurrentWeatherUseCase,
 ) : ViewModel() {
 
-    private val _state = mutableStateOf(CurrentWeatherState())
-    val state: State<CurrentWeatherState> = _state
+    private var _state = mutableStateOf(CurrentWeatherState())
+    var state: State<CurrentWeatherState> = _state
+
+    var cityState = mutableStateOf("Moscow")
+        private set
 
     init {
-        val city = "Moscow"
-        getCurrentWeather(city)
+        getCurrentWeather()
     }
 
-    private fun getCurrentWeather(
-        city: String,
+    fun getCurrentWeather(
+        city: String = cityState.value,
         token: String = BuildConfig.API_KEY,
         units: String = "metric",
     ) {
@@ -49,6 +50,10 @@ class CurrentWeatherViewModel @Inject constructor(
                 }
             }
         }.launchIn(viewModelScope)
+    }
+
+    fun updateCity(newCity: String) {
+        cityState.value = newCity
     }
 
 }

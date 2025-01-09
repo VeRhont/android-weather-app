@@ -21,10 +21,9 @@ import com.example.openweatherapi.domain.model.WeatherForecast
 import com.example.openweatherapi.presentation.weather_forecast.WeatherForecastViewModel
 
 
-
-
 @Composable
 fun WeatherForecastScreen(
+    city: String,
     modifier: Modifier = Modifier,
     viewModel: WeatherForecastViewModel = hiltViewModel(),
 ) {
