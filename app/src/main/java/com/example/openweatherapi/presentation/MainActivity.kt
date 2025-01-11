@@ -1,7 +1,6 @@
 package com.example.openweatherapi.presentation
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -31,18 +30,18 @@ class MainActivity : ComponentActivity() {
                     NavHost(
                         navController = navController,
 //                        startDestination = Screen.CurrentWeatherScreen.route
-                        startDestination = ScreenA
+                        startDestination = ScreenCurrentWeather
                     ) {
 
-                        composable<ScreenA> {
+                        composable<ScreenCurrentWeather> {
                             CurrentWeatherScreen(
                                 navController = navController,
                                 modifier = Modifier.padding(innerPadding)
                             )
                         }
 
-                        composable<ScreenB> {
-                            val city = it.toRoute<ScreenB>().city
+                        composable<ScreenWeatherForecast> {
+                            val city = it.toRoute<ScreenWeatherForecast>().city
                             WeatherForecastScreen(
                                 city = city,
                                 modifier = Modifier.padding(innerPadding)

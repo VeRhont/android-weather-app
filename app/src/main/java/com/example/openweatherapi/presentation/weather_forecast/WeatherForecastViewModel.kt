@@ -66,8 +66,8 @@ class WeatherForecastViewModel @Inject constructor(
                             i++
                         }
 
-                        val a = (i..< result1.count()-8+i step 9).map { j ->
-                            result1.subList(j, j + 9)
+                        val a = (i..< result1.count()-8+i step 8).map { j ->
+                            result1.subList(j, j + 8)
                         }.toList()
 
                         val resultF = listOf(result1.subList(0, i)) + a
