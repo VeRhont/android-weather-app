@@ -1,6 +1,5 @@
 package com.example.openweatherapi.presentation.weather_forecast
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
@@ -8,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.openweatherapi.BuildConfig
 import com.example.openweatherapi.common.Resource
+import com.example.openweatherapi.common.getDate
 import com.example.openweatherapi.data.remote.dto.ListItem
 import com.example.openweatherapi.domain.use_case.get_weather_forecast.GetWeatherForecastUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,18 +19,13 @@ import javax.inject.Inject
 @HiltViewModel
 class WeatherForecastViewModel @Inject constructor(
     private val getWeatherForecastUseCase: GetWeatherForecastUseCase,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
     private val _state = mutableStateOf(WeatherForecastState())
     val state: State<WeatherForecastState> = _state
 
-
     init {
-//        Log.d("CITY", savedStateHandle.get<String>("city") ?: "NULL")
-//        val city = "Moscow"
-//        getWeatherForecast(city)
-
         savedStateHandle.get<String>("city")?.let { city ->
             getWeatherForecast(city)
         }
@@ -54,28 +49,32 @@ class WeatherForecastViewModel @Inject constructor(
                 }
 
                 is Resource.Success -> {
-
-                    val result1 = result.data?.list
-                    var i = 0
-
-                    result1?.let {
-
-                        val today = result1[0].dtTxt.split(" ")[0]
-
-                        while (result1[i].dtTxt.split(" ")[0] == today) {
-                            i++
-                        }
-
-                        val a = (i..< result1.count()-8+i step 8).map { j ->
-                            result1.subList(j, j + 8)
-                        }.toList()
-
-                        val resultF = listOf(result1.subList(0, i)) + a
-
-                        _state.value = WeatherForecastState(weatherForecast = resultF)
+                    result.data?.list?.let {
+                        _state.value = WeatherForecastState(
+                            weatherForecast = getWeatherForecast(it)
+                        )
                     }
                 }
             }
         }.launchIn(viewModelScope)
+    }
+
+    private fun getWeatherForecast(resultList: ArrayList<ListItem>): List<List<ListItem>> {
+        val currentDate = resultList[0].getDate()
+
+        // Index of the last entry of the current date
+        var lastEntryIndex = 0
+        while (resultList[lastEntryIndex].getDate() == currentDate) {
+            lastEntryIndex++
+        }
+
+        val currentDateForecast = listOf(resultList.subList(0, lastEntryIndex))
+
+        val otherDatesForecast =
+            (lastEntryIndex..<resultList.count() - 8 + lastEntryIndex step 8).map { j ->
+                resultList.subList(j, j + 8)
+            }.toList()
+
+        return currentDateForecast + otherDatesForecast
     }
 }

@@ -17,6 +17,7 @@ import com.example.openweatherapi.presentation.theme.OpenWeatherAPITheme
 import com.example.openweatherapi.presentation.weather_forecast.components.WeatherForecastScreen
 import dagger.hilt.android.AndroidEntryPoint
 
+
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,7 +30,6 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     NavHost(
                         navController = navController,
-//                        startDestination = Screen.CurrentWeatherScreen.route
                         startDestination = ScreenCurrentWeather
                     ) {
 
@@ -53,20 +53,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
-//                        composable (
-//                            route = Screen.CurrentWeatherScreen.route
-//                        ) {
-//                            CurrentWeatherScreen(
-//                                navController = navController,
-//                                modifier = Modifier.padding(innerPadding)
-//                            )
-//                        }
-
-//                        composable (
-//                            route = Screen.WeatherForecastScreen.route
-//                        ) {
-//                            WeatherForecastScreen(
-//                                modifier = Modifier.padding(innerPadding)
-//                            )
-//                        }

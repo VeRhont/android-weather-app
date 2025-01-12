@@ -14,6 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.openweatherapi.common.round
 import com.example.openweatherapi.data.remote.dto.ListItem
+import com.example.openweatherapi.common.getDate
+import com.example.openweatherapi.common.getTime
 
 
 @Composable
@@ -29,7 +31,7 @@ fun WeatherForDay(
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = list[0].dtTxt.substring(0, 10)
+            text = list[0].getDate()
         )
 
         LazyRow(
@@ -44,7 +46,7 @@ fun WeatherForDay(
                     temperature = item.main.temp.round(1),
                     weather = item.weather[0].main,
                     icon = item.weather[0].icon,
-                    time = item.dtTxt.substring(11, 16)
+                    time = item.getTime()
                 )
             }
         }
