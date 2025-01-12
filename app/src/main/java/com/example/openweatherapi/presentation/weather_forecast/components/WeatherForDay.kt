@@ -12,10 +12,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.openweatherapi.common.round
 import com.example.openweatherapi.data.remote.dto.ListItem
 import com.example.openweatherapi.common.getDate
 import com.example.openweatherapi.common.getTime
+import com.example.openweatherapi.presentation.theme.FontColorDark
 
 
 @Composable
@@ -31,7 +33,9 @@ fun WeatherForDay(
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = list[0].getDate()
+            text = list[0].getDate(),
+            fontSize = 20.sp,
+            color = FontColorDark
         )
 
         LazyRow(

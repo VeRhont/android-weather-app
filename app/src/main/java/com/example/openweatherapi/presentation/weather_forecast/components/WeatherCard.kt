@@ -11,9 +11,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,8 +22,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.example.openweatherapi.presentation.theme.CardColor
-import com.example.openweatherapi.presentation.theme.FontColorDark
+import com.example.openweatherapi.presentation.theme.FontColor
 import java.util.Locale
+
 
 @Composable
 fun WeatherCard(
@@ -34,7 +34,10 @@ fun WeatherCard(
     time: String,
     modifier: Modifier = Modifier,
 ) {
-    Card(
+    ElevatedCard(
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 8.dp
+        ),
         modifier = modifier
             .fillMaxHeight()
             .width(130.dp)
@@ -51,11 +54,13 @@ fun WeatherCard(
         ) {
             Text(
                 text = time,
-                style = MaterialTheme.typography.bodySmall
+                fontSize = 12.sp,
+                color = FontColor
             )
             Text(
                 text = "${temperature}°C",
-                style = MaterialTheme.typography.headlineSmall
+                fontSize = 22.sp,
+                color = FontColor
             )
             Row(
                 modifier = modifier.fillMaxWidth(),
@@ -70,7 +75,7 @@ fun WeatherCard(
                 Text(
                     text = weather.lowercase(Locale.ROOT),
                     fontSize = 16.sp,
-                    color = FontColorDark
+                    color = FontColor
                 )
             }
         }

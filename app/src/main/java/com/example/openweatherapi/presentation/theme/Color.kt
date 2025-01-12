@@ -14,6 +14,6 @@ val BackgroundColor = Color(0xFF96C9BE)
 val BackgroundColorDark = Color(0xFF74B7A9)
 val FontColor = Color(0xFFFFFFFF)
 val FontColorDark = Color(0xFF2B594E)
-val CardColor = Color(0xFF9DE3E7)
+val CardColor = Color(0xFF348371)
 val ButtonColor = Color(0xFF358370)
 
