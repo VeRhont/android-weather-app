@@ -1,27 +1,17 @@
 package com.example.openweatherapi.presentation.current_weather
 
-import android.annotation.SuppressLint
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.openweatherapi.BuildConfig
 import com.example.openweatherapi.common.Resource
+import com.example.openweatherapi.common.getCurrentDate
 import com.example.openweatherapi.domain.use_case.get_current_weather.GetCurrentWeatherUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import java.text.SimpleDateFormat
-import java.util.Date
 import javax.inject.Inject
-
-
-
-@SuppressLint("SimpleDateFormat")
-fun getCurrentDate(): String {
-    val sdf = SimpleDateFormat("dd.MM.yyyy")
-    return sdf.format(Date())
-}
 
 
 @HiltViewModel

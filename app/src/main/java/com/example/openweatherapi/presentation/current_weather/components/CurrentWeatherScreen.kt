@@ -216,9 +216,11 @@ fun CurrentWeatherScreen(
 
 
         if (state.error.isNotBlank()) {
+            SearchField(viewModel)
             Text(
                 text = state.error,
                 color = MaterialTheme.colorScheme.error,
+                fontSize = 24.sp,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .fillMaxWidth()

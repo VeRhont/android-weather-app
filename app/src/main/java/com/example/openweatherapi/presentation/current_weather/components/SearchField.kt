@@ -21,6 +21,8 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.openweatherapi.presentation.current_weather.CurrentWeatherViewModel
+import com.example.openweatherapi.presentation.theme.ButtonColor
+import com.example.openweatherapi.presentation.theme.FontColorDark
 
 
 @Composable
@@ -55,7 +57,10 @@ fun SearchField(viewModel: CurrentWeatherViewModel) {
             focusedContainerColor = Color.Transparent,
             unfocusedContainerColor = Color.Transparent,
             focusedTextColor = Color.White,
-            unfocusedTextColor = Color.White
+            unfocusedTextColor = Color.White,
+            unfocusedIndicatorColor = FontColorDark,
+            focusedIndicatorColor = FontColorDark,
+
         )
     )
 }
